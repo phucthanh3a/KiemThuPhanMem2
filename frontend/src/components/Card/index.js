@@ -46,22 +46,26 @@ function Cards({ item }) {
       </Link>
       <CardFooter>
         <ButtonGroup spacing="2">
+          {/* NÚT "Add to Cart" này giờ sẽ có logic */}
           <Button
-            variant="solid"
-            colorScheme={findBasketItem ? "red" : "green"}
-            onClick={() => addToBasket(item, findBasketItem)}
+            variant="solid" // Đổi từ 'ghost' sang 'solid' hoặc giữ nguyên tùy ý
+            colorScheme={findBasketItem ? "red" : "blue"} // Đổi màu dựa trên trạng thái
+            onClick={() => addToBasket(item)} // Gọi hàm addToBasket
           >
-            {findBasketItem ? "Remove from Basket" : "Add to Basket"}
+            {findBasketItem ? "Remove from Cart" : "Add to Cart"} {/* Đổi chữ */}
           </Button>
-          <Button variant="ghost" colorScheme="blue">
-            Add to cart
+
+          {/* Nút cũ "Add to Basket" có thể bị xóa hoặc thay đổi nếu muốn */}
+          {/* Nếu bạn vẫn muốn có 2 nút, nút này có thể là "View Details" hoặc "Quick Buy" */}
+          {/* Ví dụ:
+          <Button variant="ghost" colorScheme="gray">
+            View Details
           </Button>
+          */}
         </ButtonGroup>
       </CardFooter>
     </Card>
   );
 }
 
-
-
-export default Cards;
+export default Cards;     
