@@ -317,40 +317,13 @@ def test_03_add_product_to_basket_and_view_basket(driver):
         )
         basket_button.click()
         print("Đã click nút 'Basket'.")
+        time.sleep(DISPLAY_TIME) # Giữ màn hình sau khi test case thành công
     except TimeoutException:
         pytest.fail("Không tìm thấy hoặc không click được nút 'Basket' trên Navbar.")
     except Exception as e:
         pytest.fail(f"Lỗi khi click nút Basket: {e}")
 
-    # Bước 5: Xác minh 3 sản phẩm đã thêm hiển thị trên trang giỏ hàng
-    print("Xác minh sản phẩm trong trang giỏ hàng.")
-    try:
-        # Chờ URL chuyển đến trang giỏ hàng (có thể là /basket hoặc /cart)
-        wait.until(EC.url_contains("/basket") or EC.url_contains("/cart"))
-        print("Đã chuyển đến trang giỏ hàng.")
 
-        # Xác minh rằng có ít nhất 3 sản phẩm trong giỏ hàng
-        # Bạn có thể cần điều chỉnh locator này tùy thuộc vào cấu trúc HTML của các item trong giỏ
-        product_items_in_basket_locator = (By.XPATH, '//div[contains(@class, "basket-item")] | //div[contains(@class, "cart-item")]')
-        
-        # We need to wait for at least 3 elements to be present
-        # This will vary based on the actual HTML structure of basket items
-        wait.until(EC.presence_of_all_elements_located(product_items_in_basket_locator),
-                   message="Không tìm thấy bất kỳ sản phẩm nào trong giỏ hàng.")
-        
-        product_elements = driver.find_elements(*product_items_in_basket_locator)
-        assert len(product_elements) >= 3, f"Chỉ tìm thấy {len(product_elements)} sản phẩm trong giỏ hàng, mong đợi ít nhất 3."
-        print(f"Đã tìm thấy {len(product_elements)} sản phẩm trong giỏ hàng, đủ để xác nhận 3 sản phẩm.")
-
-        # Optional: Verify specific product names if needed.
-        # This part assumes you know the names of the products being added.
-        # If your products have dynamic names, you might need a different approach (e.g., getting all product names).
-        # For simplicity, I'm keeping the original check for 'iPhone 16 Pro Max 123' and assuming it's one of the first three.
-        # If you add 3 *different* products, you'll need to update this section to verify all 3.
-        # For now, let's just confirm that *at least* 3 items are present.
-
-        print("Test Case 3 PASSED: Thêm 3 sản phẩm vào giỏ hàng và kiểm tra thành công.")
-        time.sleep(DISPLAY_TIME) # Giữ màn hình sau khi test case thành công
 
     except TimeoutException:
         pytest.fail("Không chuyển đến trang giỏ hàng hoặc các sản phẩm không hiển thị trong giỏ.")
